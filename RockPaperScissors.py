@@ -34,13 +34,12 @@ def getKeysFrom(targetDictionary):
 	return( list(dict.keys(targetDictionary))  )
 
 def returnListOfValuesSeparatedBySlashes(targetList):
-	sep = " / "
-	return(sep.join(targetList))
+	return(" / ".join(targetList))
 
 def buildInputRequest(player, desiredInputs):
 	return (player+" player throws "+returnListOfValuesSeparatedBySlashes(desiredInputs)+" : ")
 
-def celebrate(winner, first, second):
+def buildAnnouncement(winner, first, second):
 	if (winner == "Draw"):
 		return "...and it's a draw!"
 	if (winner == "First"):
@@ -140,9 +139,9 @@ def testFunctions():
 	assert (buildInputRequest("A", ["B", "c"]) == "A player throws B / c : "), "function to build input question"
 
 	# Check winning message
-	assert (celebrate("Draw", "A", "B") == "...and it's a draw!"), "message on draw"
-	assert (celebrate("First", "A", "B") == "First wins, as A beats B"), "message on draw"
-	assert (celebrate("Second", "A", "B") == "Second wins, as B beats A"), "message on draw"
+	assert (buildAnnouncement("Draw", "A", "B") == "...and it's a draw!"), "message on draw"
+	assert (buildAnnouncement("First", "A", "B") == "First wins, as A beats B"), "message on draw"
+	assert (buildAnnouncement("Second", "A", "B") == "Second wins, as B beats A"), "message on draw"
 
 #### END OF TESTS
 ### DO TESTS	
@@ -160,6 +159,7 @@ secondPlayerChoice = ""
 
 validInputForGame = getKeysFrom(rules)
 
+
 ### Main
 while not (acceptInput(validInputForGame, firstPlayerChoice) ):
 	firstPlayerChoice = input(buildInputRequest("First", validInputForGame) )
@@ -167,4 +167,4 @@ while not (acceptInput(validInputForGame, firstPlayerChoice) ):
 while not (acceptInput(validInputForGame, secondPlayerChoice) ):
 	secondPlayerChoice = input(buildInputRequest("Second", validInputForGame) )
 	
-print(celebrate(decideWinner(rules, firstPlayerChoice, secondPlayerChoice), firstPlayerChoice, secondPlayerChoice))	
+print(buildAnnouncement(decideWinner(rules, firstPlayerChoice, secondPlayerChoice), firstPlayerChoice, secondPlayerChoice))	
