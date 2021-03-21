@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
 ### CONFIGURATION
-# Expressed as a dict of dicts: first:second:result
+
+# Consider making each ruleset an object, with rules, validAbbreviations, decideWinner, acceptInput
+
 # Rock Paper Scissors
+# Expressed as a dict of dicts: first:second:result
 rulesRPS ={
    "Rock": {"Rock": "Draw", "Paper": "Second", "Scissors": "First"},
    "Paper": {"Rock": "First", "Paper": "Draw", "Scissors": "Second"},
@@ -10,6 +13,7 @@ rulesRPS ={
 }
 
 # Rock Paper Scissors Lizard Spock https://www.wikihow.com/Play-Rock-Paper-Scissors-Lizard-Spock
+# Expressed as a dict of dicts: first:second:result
 rulesRPSLS ={
    "Rock": 		{"Rock": "Draw",   "Paper": "Second", "Scissors": "First",  "Lizard": "First",  "Spock": "Second"},
    "Paper":		{"Rock": "First",  "Paper": "Draw",   "Scissors": "Second", "Lizard": "Second", "Spock": "First"},
@@ -18,28 +22,32 @@ rulesRPSLS ={
    "Spock":		{"Rock": "First",  "Paper": "Second", "Scissors": "First",  "Lizard": "Second",  "Spock": "Draw"}
 }
 
+# consider a dict (for each ruleset) of viable abbreviations -> values
+
 rules = rulesRPSLS
 testMe = True
 
 ### END OF CONFIG
 ### FUNCTIONS
+#### Perhaps split by util / rules-related / game, in order to allow moving into classes
+#### favouring (here) 'pure' functions, for ease of testing & reusability
 
-def decideWinner(rules, first, second):
+def decideWinner(rules, first, second): # rules-related - maybe even for specific rules
 	return(rules[first][second])
 	
-def acceptInput(validInput, inputString):
+def acceptInput(validInput, inputString): # game-related - may be refined to allow case-insenstivity / abbreviated (mind S)
 	return (inputString in validInput)
 
-def getKeysFrom(targetDictionary):
+def getKeysFrom(targetDictionary): # utility
 	return( list(dict.keys(targetDictionary))  )
 
-def returnListOfValuesSeparatedBySlashes(targetList):
+def returnListOfValuesSeparatedBySlashes(targetList): # just here for testing + meaningful name - could be folded into buildInputRequest
 	return(" / ".join(targetList))
 
-def buildInputRequest(player, desiredInputs):
+def buildInputRequest(player, desiredInputs): # game-related - text message
 	return (player+" player throws "+returnListOfValuesSeparatedBySlashes(desiredInputs)+" : ")
 
-def buildAnnouncement(winner, first, second):
+def buildAnnouncement(winner, first, second): # game-related - text message
 	if (winner == "Draw"):
 		return "...and it's a draw!"
 	if (winner == "First"):
@@ -67,7 +75,7 @@ def testDataRPS(rules):
 def testDataRPSLS(rules):
 	validInput = getKeysFrom(rules)
 	
-	# Check that the possible inputs are RPS, and only that.
+	# Check that the possible inputs are RPSLS, and only that.
 	assert (validInput[0] == "Rock")
 	assert (validInput[1] == "Paper")
 	assert (validInput[2] == "Scissors")
@@ -111,15 +119,29 @@ def testData(rules):
 					if (winner=="Second"): return "First"
 					if (winner=="Draw"): return "Draw"
 					
-				assert ((decideWinner(rules, myFirst, mySecond)  == invert(decideWinner(rules, mySecond, myFirst) ))), "symmetry not kept for "+myFirst+" and "+mySecond
+				assert ((decideWinner(rules, myFirst, mySecond)  == invert(decideWinner(rules, mySecond, myFirst) ))), "rules are unsymmatrical for "+myFirst+" and "+mySecond
 				
 	# check that this function returns "draw" for two the same
 	for hand in validInput:
 		assert (decideWinner(rules, hand, hand) == "Draw"), "Same throw ("+throw+") draws" 
 	
-	# check that each row / col has an even no. of wins / losses
-	# NOT DONE
-	
+	# check that the rules are 'fair': that each valid item has the same number of wins/losses/draws
+	# ignore that wins should == losses, if symmatry is kept above.
+	wins = {}
+	losses = {}
+	draws = {}
+	for myFirst in validInput:
+		wins[myFirst] = 0
+		losses[myFirst] = 0
+		draws[myFirst] = 0
+		for mySecond in validInput:
+			wins[myFirst] += 1 if (decideWinner(rules, myFirst, mySecond) == "First") else 0
+			losses[myFirst] += 1 if (decideWinner(rules, myFirst, mySecond) == "Second") else 0
+			draws[myFirst] += 1 if (decideWinner(rules, myFirst, mySecond) == "Draw") else 0
+	assert (len(set(wins.values())) == 1), wins  #(that all wins are the same)
+	assert (len(set(losses.values())) == 1), losses  #(that all losses are the same)
+	assert (len(set(draws.values())) == 1), draws #(that all draws are the same)
+				
 def testFunctions():
 	
 	# Check that this function returns the referenced value in a 2D matrix of 'rules'
@@ -161,6 +183,11 @@ validInputForGame = getKeysFrom(rules)
 
 
 ### Main
+
+#### Consider putting this in a loop.
+#### Consider keping score
+#### Consider an algorothmic opponent (and how to convince that it's not just reading the user input /before/ throwing hand)
+
 while not (acceptInput(validInputForGame, firstPlayerChoice) ):
 	firstPlayerChoice = input(buildInputRequest("First", validInputForGame) )
 	
