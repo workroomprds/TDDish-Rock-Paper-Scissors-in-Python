@@ -39,7 +39,7 @@ def acceptInput(validInput, inputString): # game-related - may be refined to all
 	return (inputString in validInput)
 
 def getKeysFrom(targetDictionary): # utility
-	return( list(dict.keys(targetDictionary))  )
+	return( list(targetDictionary.keys())  )
 
 def returnListOfValuesSeparatedBySlashes(targetList): # just here for testing + meaningful name - could be folded into buildInputRequest
 	return(" / ".join(targetList))
@@ -152,7 +152,7 @@ def testFunctions():
 	assert (decideWinner(rules, "B", "B") == 4)
 	
 	# check that this function returns the keys from a dict
-	assert (getKeysFrom({"A":0, "b":1}) == ["A", "b"]), "getValidInput should return keys of a dict"
+	assert (getKeysFrom({"A":0, "b":1}) == ["A", "b"]), "getValidInput should return keys of a dict - this returns "+str(getKeysFrom({"A":0, "b":1}))
 	
 	# Check that values in a list can be combined for input mesage
 	assert (returnListOfValuesSeparatedBySlashes(["A", "b"]) == "A / b"), "returns values"
