@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import utilsRPS as utils
 import gameRPS as game
 
 # Rock Paper Scissors Lizard Spock https://www.wikihow.com/Play-Rock-Paper-Scissors-Lizard-Spock
@@ -14,7 +13,7 @@ rules ={
 }
 
 def testData():
-   validInput = utils.getKeysFrom(rules)
+   validInput = game.utils.getKeysFrom(rules)
    
    # Check that the possible inputs are RPSLS, and only that.
    assert (validInput[0] == "Rock")
@@ -37,6 +36,6 @@ def testData():
    assert (game.decideWinner(rules, "Lizard", "Spock") == "First"), "Lizard poisons Spock"
    assert (game.decideWinner(rules, "Spock", "Lizard") == "Second"), "! Lizard poisons Spock"
    
-   utils.testRules(rules)
+   game.testRules(rules)
    
 testData()

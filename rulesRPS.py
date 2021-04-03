@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import utilsRPS as utils
 import gameRPS as game
 
 # Expressed as a dict of dicts: first:second:result
@@ -11,7 +10,7 @@ rules = {
 }
 
 def testData():
-   validInput = utils.getKeysFrom(rules)
+   validInput = game.utils.getKeysFrom(rules)
    
    # Check that the possible inputs are RPS, and only that.
    assert (validInput[0] == "Rock")
@@ -24,6 +23,6 @@ def testData():
    assert (game.decideWinner(rules, "Rock", "Scissors") == "First"), "Rock should beat Scissors"
    assert (game.decideWinner(rules, "Paper", "Scissors") == "Second"), "Paper should beat Scissors"
 
-   utils.testRules(rules)
+   game.testRules(rules)
 
 testData()
