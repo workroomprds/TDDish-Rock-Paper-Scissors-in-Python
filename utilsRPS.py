@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import gameRPS as game
-
 def acceptInput(validInput, inputString): # game-related - may be refined to allow case-insenstivity / abbreviated (mind S)
 	return (inputString in validInput)
 
