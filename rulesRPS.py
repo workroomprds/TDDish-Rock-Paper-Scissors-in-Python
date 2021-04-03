@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import utilsRPS as utils
+import gameRPS as game
 
 # Expressed as a dict of dicts: first:second:result
 rules = {
@@ -19,9 +20,9 @@ def testData():
    assert (validInput.__len__() == 3), "Number of keys"
    
    # Check sample of rules (note: draws and symmetry already checked)
-   assert (utils.decideWinner(rules, "Rock", "Paper") == "Second"), "Paper should beat Rock"
-   assert (utils.decideWinner(rules, "Rock", "Scissors") == "First"), "Rock should beat Scissors"
-   assert (utils.decideWinner(rules, "Paper", "Scissors") == "Second"), "Paper should beat Scissors"
+   assert (game.decideWinner(rules, "Rock", "Paper") == "Second"), "Paper should beat Rock"
+   assert (game.decideWinner(rules, "Rock", "Scissors") == "First"), "Rock should beat Scissors"
+   assert (game.decideWinner(rules, "Paper", "Scissors") == "Second"), "Paper should beat Scissors"
 
    utils.testRules(rules)
 
