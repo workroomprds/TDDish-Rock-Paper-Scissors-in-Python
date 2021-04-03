@@ -18,11 +18,11 @@ rules = rulesRPSLS.rules
 #### consider a dict (for each ruleset) of viable abbreviations -> values
 #### Consider putting this in a loop.
 #### Consider keping score
-#### Consider an algorothmic opponent (and how to convince that it's not just reading the user input /before/ throwing hand)
+#### Consider an algorithmic opponent (and how to convince that it's not just reading the user input /before/ throwing hand)
 
-firstPlayerChoice  = game.requestValidInput("First",  rules , ui.askForInput)
-secondPlayerChoice = game.requestValidInput("Second", rules , ui.askForInput)
+firstPlayerChoice  = game.request_valid_input(player="First",  rules=rules, get_input=ui.askForInput)
+secondPlayerChoice = game.request_valid_input(player="Second", rules=rules, get_input=ui.askForInput)
 
-winner = game.decideWinner(rules, firstPlayerChoice, secondPlayerChoice)
+winner = game.decide_winner(rules=rules, first=firstPlayerChoice, second=secondPlayerChoice)
 
-print(game.buildAnnouncement(winner, firstPlayerChoice, secondPlayerChoice))	
+print(game.build_announcement(winner=winner, first=firstPlayerChoice, second=secondPlayerChoice))
