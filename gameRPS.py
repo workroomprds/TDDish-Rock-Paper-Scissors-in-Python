@@ -16,6 +16,19 @@ def buildAnnouncement(winner, first, second): # game-related - text message
 		return "First wins, as "+first+" beats "+second
 	return "Second wins, as "+second+" beats "+first
 
+def validInputForGame(rules):
+	return utils.getKeysFrom(rules)
+
+def requestValidInput(player, rules, getInput):
+	validSet = validInputForGame(rules)
+	request = buildInputRequest(player, validSet)
+	choice = ""
+	while not (utils.acceptInput(validSet, choice) ):
+		choice = getInput(request)
+	return(choice)
+
+
+
 
 def test():
 	# Check that this function returns the referenced value in a 2D matrix of 'rules'
@@ -32,6 +45,27 @@ def test():
 	assert (buildAnnouncement("Draw", "A", "B") == "...and it's a draw!"), "message on draw"
 	assert (buildAnnouncement("First", "A", "B") == "First wins, as A beats B"), "message on draw"
 	assert (buildAnnouncement("Second", "A", "B") == "Second wins, as B beats A"), "message on draw"
+	
+	# Chaeck valid input for game
+	rules = {"A":{"A":1, "B":2}, "B":{"A":3, "B":4}}
+	assert (validInputForGame(rules) == ["A", "B"])
+	
+	# Check req valid input
+	# CAN'T WORK OUT NOW TO DO THIS, YET.
+	# Wanted to build capturedOutput, as a spy.
+	# capturedOutput catches "First player throws A / B :"
+	# but it's not available for checking....
+	##rules = {"A":{"A":1, "B":2}, "B":{"A":3, "B":4}}
+	##capturedOutput  = ""
+	##def captureOutput(input):
+	##	print(input)
+	##	capturedOutput = input
+	##	return validInputForGame(rules)[0]
+	##
+	##requestValidInput("First", rules, captureOutput )
+	##print(capturedOutput)
+	##assert (capturedOutput == "First player throws A / B : ")
+
 
 def testRules(rules):
 	"""To test the symmetry of the rules, and more."""

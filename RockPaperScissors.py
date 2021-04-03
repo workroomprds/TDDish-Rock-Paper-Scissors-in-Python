@@ -4,15 +4,13 @@
 import rulesRPS as rulesRPS
 import rulesRPSLS as rulesRPSLS
 import utilsRPS as utils
+import uiRPS as ui
 import gameRPS as game
 
+### Initialise
 #rules = rulesRPS.rules
 rules = rulesRPSLS.rules
 
-### Initialise
-firstPlayerChoice = ""
-secondPlayerChoice = ""
-validInputForGame = utils.getKeysFrom(rules)
 
 
 ### Main
@@ -22,12 +20,9 @@ validInputForGame = utils.getKeysFrom(rules)
 #### Consider keping score
 #### Consider an algorothmic opponent (and how to convince that it's not just reading the user input /before/ throwing hand)
 
-while not (utils.acceptInput(validInputForGame, firstPlayerChoice) ):
-	firstPlayerChoice = input(game.buildInputRequest("First", validInputForGame) )
-	
-while not (utils.acceptInput(validInputForGame, secondPlayerChoice) ):
-	secondPlayerChoice = input(game.buildInputRequest("Second", validInputForGame) )
-	
+firstPlayerChoice  = game.requestValidInput("First",  rules , ui.askForInput)
+secondPlayerChoice = game.requestValidInput("Second", rules , ui.askForInput)
+
 winner = game.decideWinner(rules, firstPlayerChoice, secondPlayerChoice)
 
 print(game.buildAnnouncement(winner, firstPlayerChoice, secondPlayerChoice))	
