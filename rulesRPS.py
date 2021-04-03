@@ -22,4 +22,7 @@ def testData():
    assert (utils.decideWinner(rules, "Rock", "Paper") == "Second"), "Paper should beat Rock"
    assert (utils.decideWinner(rules, "Rock", "Scissors") == "First"), "Rock should beat Scissors"
    assert (utils.decideWinner(rules, "Paper", "Scissors") == "Second"), "Paper should beat Scissors"
-   
+
+   utils.testRules(rules)
+
+testData()

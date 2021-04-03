@@ -36,4 +36,6 @@ def testData():
    assert (utils.decideWinner(rules, "Lizard", "Spock") == "First"), "Lizard poisons Spock"
    assert (utils.decideWinner(rules, "Spock", "Lizard") == "Second"), "! Lizard poisons Spock"
    
+   utils.testRules(rules)
    
+testData()
