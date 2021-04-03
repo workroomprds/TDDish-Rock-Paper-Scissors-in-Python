@@ -4,27 +4,14 @@
 
 # Consider making each ruleset an object, with rules, validAbbreviations, decideWinner, acceptInput
 
-# Rock Paper Scissors
-# Expressed as a dict of dicts: first:second:result
-rulesRPS ={
-   "Rock": {"Rock": "Draw", "Paper": "Second", "Scissors": "First"},
-   "Paper": {"Rock": "First", "Paper": "Draw", "Scissors": "Second"},
-   "Scissors": {"Rock": "Second", "Paper": "First", "Scissors": "Draw"}
-}
 
-# Rock Paper Scissors Lizard Spock https://www.wikihow.com/Play-Rock-Paper-Scissors-Lizard-Spock
-# Expressed as a dict of dicts: first:second:result
-rulesRPSLS ={
-   "Rock": 		{"Rock": "Draw",   "Paper": "Second", "Scissors": "First",  "Lizard": "First",  "Spock": "Second"},
-   "Paper":		{"Rock": "First",  "Paper": "Draw",   "Scissors": "Second", "Lizard": "Second", "Spock": "First"},
-   "Scissors":	{"Rock": "Second", "Paper": "First",  "Scissors": "Draw",   "Lizard": "First",  "Spock": "Second"},
-   "Lizard":	{"Rock": "Second", "Paper": "First",  "Scissors": "Second", "Lizard": "Draw",   "Spock": "First"},
-   "Spock":		{"Rock": "First",  "Paper": "Second", "Scissors": "First",  "Lizard": "Second",  "Spock": "Draw"}
-}
+# Rock Paper Scissors
+import rulesRPS as rulesRPS
+import rulesRPSLS as rulesRPSLS
 
 # consider a dict (for each ruleset) of viable abbreviations -> values
 
-rules = rulesRPSLS
+rules = rulesRPS.rules
 testMe = True
 
 ### END OF CONFIG
@@ -170,10 +157,10 @@ def testFunctions():
 	
 if (testMe):
 	testFunctions()
-	testData(rulesRPS)
-	testData(rulesRPSLS)
-	testDataRPS(rulesRPS)
-	testDataRPSLS(rulesRPSLS)
+	testData(rulesRPS.rules)
+	testData(rulesRPSLS.rules)
+	testDataRPS(rulesRPS.rules)
+	testDataRPSLS(rulesRPSLS.rules)
 	
 ### Initialise
 firstPlayerChoice = ""
