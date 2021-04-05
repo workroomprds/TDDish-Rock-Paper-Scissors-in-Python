@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 ### CONFIGURATION
+import pytest
+
 import rulesRPS as rulesRPS
 import rulesRPSLS as rulesRPSLS
 import utilsRPS as utils
@@ -10,8 +12,6 @@ import gameRPS as game
 ### Initialise
 #rules = rulesRPS.rules
 rules = rulesRPSLS.rules
-
-
 
 ### Main
 #### Consider making each ruleset an object, with rules, validAbbreviations, decideWinner, acceptInput
@@ -26,3 +26,12 @@ secondPlayerChoice = game.request_valid_input(player="Second", rules=rules, get_
 winner = game.decide_winner(rules=rules, first=firstPlayerChoice, second=secondPlayerChoice)
 
 print(game.build_announcement(winner=winner, first=firstPlayerChoice, second=secondPlayerChoice))
+
+def test():
+	"""To run tests on modules"""
+	rulesRPS.test_data()
+	rulesRPSLS.test_data()
+	utils.test()
+	game.test()
+	
+	

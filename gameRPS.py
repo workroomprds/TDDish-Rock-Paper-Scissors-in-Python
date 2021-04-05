@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import utilsRPS as utils
+import pytest
 
 
 def decide_winner(rules:object, first:str, second:str)->str: 
@@ -52,10 +53,13 @@ def test():
 	assert (build_announcement("First", "A", "B") == "First wins, as A beats B"), "message on draw"
 	assert (build_announcement("Second", "A", "B") == "Second wins, as B beats A"), "message on draw"
 	
-	# Chaeck valid input for game
+	# Check valid input for game
 	rules = {"A":{"A":1, "B":2}, "B":{"A":3, "B":4}}
 	assert (valid_input_for_game(rules) == ["A", "B"])
 	
+	@pytest.mark.skip(reason="Don't how to check this programatically, do in exploration")
+	def check_request_valid_input():
+		pass
 	# Check request_valid_input
 	# CAN'T WORK OUT NOW TO DO THIS, YET.
 	# Wanted to build capturedOutput, as a spy.
@@ -72,8 +76,8 @@ def test():
 	##print(capturedOutput)
 	##assert (capturedOutput == "First player throws A / B : ")
 
-
-def testRules(rules):
+workingRules = {"A":{"A":"Draw", "B":"First", "C":"Second"}, "B":{"A":"Second", "B":"Draw", "C":"First"}, "C":{"A":"First", "B":"Second", "C":"Draw"}}
+def testRules(rules=workingRules):
 	"""To test the symmetry of the rules, and more."""
 	# ! NEEDS A TEST ITSELF - simple rules...
 	
@@ -92,15 +96,14 @@ def testRules(rules):
 	#Check symmetry / ordering - that if A beats B, B loses to A
 	for myFirst in validInput:
 		for mySecond in validInput:
-			if (myFirst != mySecond):
-				def invert(winner):
-					if (winner=="First"): return "Second"
-					if (winner=="Second"): return "First"
-					if (winner=="Draw"): return "Draw"
-					
-				assert ((decide_winner
-				(rules, myFirst, mySecond)  == invert(decide_winner
-					(rules, mySecond, myFirst) ))), "rules are unsymmetrical for "+myFirst+" and "+mySecond
+			def invert(winner):
+				if (winner=="First"): return "Second"
+				if (winner=="Second"): return "First"
+				if (winner=="Draw"): return "Draw"
+				
+			assert ((decide_winner
+			(rules, myFirst, mySecond)  == invert(decide_winner
+				(rules, mySecond, myFirst) ))), "rules are unsymmetrical for "+myFirst+" and "+mySecond
 				
 	# check that this function returns "draw" for two the same
 	for hand in validInput:
@@ -129,3 +132,4 @@ def testRules(rules):
 	
 
 test()
+testRules()
