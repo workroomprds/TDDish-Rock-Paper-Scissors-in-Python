@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import gameRPS as game
+from gameRPS import Game
 
 # Rock Paper Scissors Lizard Spock https://www.wikihow.com/Play-Rock-Paper-Scissors-Lizard-Spock
 # Expressed as a dict of dicts: first:second:result
@@ -14,7 +14,8 @@ rules ={
 
 def test_data():
    """Tests the rules for specific stuff for this ruleset"""
-   validInput = game.valid_input_for_game(rules)
+   game = Game(rules)
+   validInput = game.valid_input_for_game()
    
    # Check that the possible inputs are RPSLS, and only that.
    assert (validInput[0] == "Rock")
@@ -25,17 +26,17 @@ def test_data():
    assert (validInput.__len__() == 5), "Number of keys"
    
    # Check sample of rules (note: draws and symmetry already checked)
-   assert (game.decide_winner(rules, "Rock", "Paper") == "Second"), "Paper wraps Rock"
-   assert (game.decide_winner(rules, "Rock", "Scissors") == "First"), "Rock blunts Scissors"
-   assert (game.decide_winner(rules, "Rock", "Lizard") == "First"), "Rock squashes Lizard"
-   assert (game.decide_winner(rules, "Rock", "Spock") == "Second"), "Spock blasts Rock"
-   assert (game.decide_winner(rules, "Paper", "Scissors") == "Second"), "Scissors cut paper"
-   assert (game.decide_winner(rules, "Paper", "Lizard") == "Second"), "Lizard eats paper"
-   assert (game.decide_winner(rules, "Paper", "Spock") == "First"), "Paper disproves Spock"
-   assert (game.decide_winner(rules, "Scissors", "Lizard") == "First"), "Scissors stab Lizard"
-   assert (game.decide_winner(rules, "Scissors", "Spock") == "Second"), "Spock breaks Scissors"
-   assert (game.decide_winner(rules, "Lizard", "Spock") == "First"), "Lizard poisons Spock"
-   assert (game.decide_winner(rules, "Spock", "Lizard") == "Second"), "! Lizard poisons Spock"
+   assert (game.decide_winner("Rock", "Paper") == "Second"), "Paper wraps Rock"
+   assert (game.decide_winner("Rock", "Scissors") == "First"), "Rock blunts Scissors"
+   assert (game.decide_winner("Rock", "Lizard") == "First"), "Rock squashes Lizard"
+   assert (game.decide_winner("Rock", "Spock") == "Second"), "Spock blasts Rock"
+   assert (game.decide_winner("Paper", "Scissors") == "Second"), "Scissors cut paper"
+   assert (game.decide_winner("Paper", "Lizard") == "Second"), "Lizard eats paper"
+   assert (game.decide_winner("Paper", "Spock") == "First"), "Paper disproves Spock"
+   assert (game.decide_winner("Scissors", "Lizard") == "First"), "Scissors stab Lizard"
+   assert (game.decide_winner("Scissors", "Spock") == "Second"), "Spock breaks Scissors"
+   assert (game.decide_winner("Lizard", "Spock") == "First"), "Lizard poisons Spock"
+   assert (game.decide_winner("Spock", "Lizard") == "Second"), "! Lizard poisons Spock"
    
    game.testRules(rules)
    
